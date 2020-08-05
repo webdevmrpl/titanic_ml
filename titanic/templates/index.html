@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Hello world</h1>
+<h3>Get your titanic prediction here</h3>
+<p>Enter all the details of the person on titanic</p>
+<p>We will output the prediction</p>
+{# pclass, sex, age, sibsp, parch, fare, embarked, title #}
+
+<form action="{% url 'result' %}" method="post">
+   {% csrf_token%}
+    <input type="text" name="name" placeholder="Name of the person">
+    <input type="text" name="age" placeholder="Age">
+    <input type="text" name="pclass" placeholder="Passenger class">
+    <input type="text" name="sex" placeholder="Sex">
+
+    <input type="text" name="sibsp" placeholder="Siblings abroad">
+    <input type="text" name="parch" placeholder="Parch">
+    <input type="text" name="fare" placeholder="Fare">
+    <input type="text" name="embarked" placeholder="Port where embarked: S/Q/C">
+    <input type="submit">
+</form>
+</body>
+</html>
