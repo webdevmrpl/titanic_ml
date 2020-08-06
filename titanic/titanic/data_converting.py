@@ -1,5 +1,5 @@
 import pandas as pd
-
+import numpy as np
 
 def convert_data(pclass, sex, age, sibsp, parch, fare, embarked, name):
     def get_title(name1):
@@ -23,7 +23,7 @@ def convert_data(pclass, sex, age, sibsp, parch, fare, embarked, name):
 
     df = pd.DataFrame(
         {'PClass': pclass, 'Sex': sex, 'Age': age, 'SibSp': sibsp, 'Parch': parch, 'Fare': fare, 'Embarked': embarked,
-         'Name': name}, index =[0,1,2,3,4,5,6,7] )
+         'Name': name}, index =[0] )
     df.loc[df['Age'] > 65, 'Age'] = df['Age'].median()
     df['Embarked'].fillna('S', inplace=True)
     df['Age'].fillna(df['Age'].median(), inplace=True)
@@ -35,5 +35,5 @@ def convert_data(pclass, sex, age, sibsp, parch, fare, embarked, name):
                      inplace=True)
     pclass, sex, age, sibsp, parch, fare, embarked, name = df['PClass'][0], df['Sex'][0], df['Age'][0], df['SibSp'][0], df['Parch'][0], \
                                                            df['Fare'][0], df['Embarked'][0], df['Title'][0]
-    return [[pclass, sex, age, sibsp, parch, fare, embarked, name]]
-
+    return np.array([[pclass, sex, age, sibsp, parch, fare, embarked, name]])
+    # 'Pclass', 'Sex', 'Age', 'SibSp', 'Parch', 'Fare','Embarked', 'Title'

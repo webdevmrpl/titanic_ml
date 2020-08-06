@@ -1,8 +1,7 @@
 from django.shortcuts import render
 from django.views.decorators.cache import never_cache
-
+from keras.models import load_model
 from .data_converting import convert_data
-import pickle
 
 @never_cache
 def index(request):
@@ -20,13 +19,14 @@ def result(request):
     fare = float(request.POST['fare'])
     embarked = request.POST['embarked']
     title = request.POST['name']
+    model_predict = load_model('titanic_NN.h5')
+    # 'Pclass', 'Sex', 'Age', 'SibSp', 'Parch', 'Fare','Embarked', 'Title'
+    prediction = model_predict.predict(convert_data(pclass, sex, age, sibsp, parch, fare, embarked, title))
+    if prediction < 0.5:
+        prediction = 'Not Survived'
+    else:
+        prediction = 'Survived'
 
-    context = {'prediction': get_real_predict(convert_data(pclass, sex, age, sibsp, parch, fare, embarked, title))}
+    context = {'prediction': prediction}
 
     return render(request, 'result.html', context=context)
-
-
-def get_real_predict(x):
-    randomforests = pickle.load(open('titanic_model.sav', 'rb'))
-    prediction = randomforests.predict(x)
-    return prediction
